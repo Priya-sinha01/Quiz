@@ -1,0 +1,237 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#0B0B0F">
+    <meta name="description" content="A thoughtful dashboard to track your income, expenses, and spending habits.">
+    <title>Expense Tracker — Personal Finance</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js" defer></script>
+  </head>
+  <body>
+    <main class="dashboard">
+      <header class="page-header">
+        <a class="brand" href="#top" aria-label="Ledger home">
+          <span class="brand-mark" aria-hidden="true">L</span>
+          <span class="brand-name">Ledger<span class="brand-period">.</span></span>
+        </a>
+        <div class="header-context">
+          <span class="context-dot" aria-hidden="true"></span>
+          <span>Personal finance</span>
+        </div>
+      </header>
+
+      <section class="hero" id="top" aria-labelledby="page-title">
+        <div class="hero-copy">
+          <p class="eyebrow">YOUR MONEY, IN FOCUS</p>
+          <h1 id="page-title">Good finances<br>start with <span>clarity.</span></h1>
+          <p class="page-subtitle">A simple way to understand where your money goes.</p>
+        </div>
+
+        <div class="balance-feature" aria-labelledby="balance-label">
+          <p class="balance-label" id="balance-label">AVAILABLE BALANCE</p>
+          <p class="balance-value" id="balance-total">₹0.00</p>
+          <div class="balance-foot">
+            <span class="balance-orbit" aria-hidden="true"></span>
+            <span>Income <span aria-hidden="true">−</span> expenses</span>
+            <time id="today-date"></time>
+          </div>
+        </div>
+      </section>
+
+      <section class="cashflow" aria-label="Income and expenses">
+        <article class="cashflow-item income-item">
+          <div class="cashflow-heading">
+            <span class="cashflow-index" aria-hidden="true">01</span>
+            <h2>INCOME</h2>
+          </div>
+          <p class="cashflow-value" id="income-total">+₹0.00</p>
+          <p class="cashflow-note">Money received</p>
+          <span class="cashflow-rule" aria-hidden="true"></span>
+        </article>
+        <article class="cashflow-item expense-item">
+          <div class="cashflow-heading">
+            <span class="cashflow-index" aria-hidden="true">02</span>
+            <h2>EXPENSES</h2>
+          </div>
+          <p class="cashflow-value" id="expenses-total">−₹0.00</p>
+          <p class="cashflow-note">Money spent</p>
+          <span class="cashflow-rule" aria-hidden="true"></span>
+        </article>
+      </section>
+
+      <section class="overview-section" id="insights-section" aria-labelledby="insights-title">
+        <div class="section-heading overview-heading">
+          <div>
+            <p class="eyebrow">THE SHAPE OF YOUR SPENDING</p>
+            <h2 id="insights-title">Spending <span>overview</span></h2>
+          </div>
+          <span class="section-index">01 <i aria-hidden="true">/</i> INSIGHTS</span>
+        </div>
+
+        <div class="overview-grid">
+          <div class="spending-chart">
+            <div class="chart-heading">
+              <h3>By category</h3>
+              <span>Share of total expenses</span>
+            </div>
+            <div class="breakdown-list" id="breakdown-list"></div>
+            <div class="overview-empty" id="overview-empty" hidden>
+              <span class="empty-orbit" aria-hidden="true"></span>
+              <p>Your spending patterns will take shape here.</p>
+            </div>
+          </div>
+
+          <aside class="insight-aside" aria-label="Spending insights">
+            <div class="insight-aside-heading">
+              <span class="insight-spark" aria-hidden="true"></span>
+              <h3>At a glance</h3>
+            </div>
+            <div class="insight-stats" id="insight-stats"></div>
+          </aside>
+        </div>
+      </section>
+
+      <div class="workspace">
+        <section class="history-panel" aria-labelledby="history-title">
+          <div class="section-heading history-heading">
+            <div>
+              <p class="eyebrow">A RUNNING RECORD</p>
+              <h2 id="history-title">Transaction history</h2>
+            </div>
+            <span class="history-count" id="transaction-count" aria-live="polite">0 transactions</span>
+          </div>
+
+          <div class="filters" aria-label="Filter transactions">
+            <div class="search-field">
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <circle cx="10.8" cy="10.8" r="6.3" />
+                <path d="m16 16 4 4" />
+              </svg>
+              <label class="visually-hidden" for="search">Search by description</label>
+              <input id="search" type="search" placeholder="Find a transaction" autocomplete="off">
+            </div>
+            <div class="filter-controls">
+              <div class="filter-field">
+                <label class="visually-hidden" for="type-filter">Filter by type</label>
+                <select id="type-filter">
+                  <option value="all">All activity</option>
+                  <option value="income">Income</option>
+                  <option value="expense">Expenses</option>
+                </select>
+              </div>
+              <div class="filter-field">
+                <label class="visually-hidden" for="category-filter">Filter by category</label>
+                <select id="category-filter">
+                  <option value="all">All categories</option>
+                  <option value="housing">Housing</option>
+                  <option value="food">Food &amp; groceries</option>
+                  <option value="transportation">Transportation</option>
+                  <option value="utilities">Utilities</option>
+                  <option value="health">Health</option>
+                  <option value="entertainment">Entertainment</option>
+                  <option value="shopping">Shopping</option>
+                  <option value="salary">Salary</option>
+                  <option value="freelance">Freelance</option>
+                  <option value="other">Other</option>
+                </select>
+              </div>
+              <div class="filter-field sort-field">
+                <label class="visually-hidden" for="sort-order">Sort transactions</label>
+                <select id="sort-order">
+                  <option value="newest">Newest first</option>
+                  <option value="oldest">Oldest first</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <div class="transaction-list" id="transaction-list" aria-live="polite"></div>
+        </section>
+
+        <section class="form-panel" aria-labelledby="form-title">
+          <div class="section-heading form-heading">
+            <div>
+              <p class="eyebrow" id="form-eyebrow">A MOMENT TO TAKE STOCK</p>
+              <h2 id="form-title">Add transaction</h2>
+            </div>
+            <span class="form-heading-mark" aria-hidden="true">+</span>
+          </div>
+
+          <form class="transaction-form" id="transaction-form" novalidate>
+            <div class="form-field">
+              <label for="description">Description</label>
+              <input id="description" name="description" type="text" maxlength="80" placeholder="What was it for?" autocomplete="off" required>
+            </div>
+
+            <div class="form-field">
+              <label for="amount">Amount</label>
+              <div class="amount-input">
+                <span aria-hidden="true">₹</span>
+                <input id="amount" name="amount" type="number" min="0.01" step="0.01" inputmode="decimal" placeholder="0.00" required>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-field">
+                <label for="type">Type</label>
+                <select id="type" name="type" required>
+                  <option value="" selected disabled>Choose type</option>
+                  <option value="income">Income</option>
+                  <option value="expense">Expense</option>
+                </select>
+              </div>
+
+              <div class="form-field">
+                <label for="category">Category</label>
+                <select id="category" name="category" required>
+                  <option value="" selected disabled>Choose category</option>
+                  <option value="housing">Housing</option>
+                  <option value="food">Food &amp; groceries</option>
+                  <option value="transportation">Transportation</option>
+                  <option value="utilities">Utilities</option>
+                  <option value="health">Health</option>
+                  <option value="entertainment">Entertainment</option>
+                  <option value="shopping">Shopping</option>
+                  <option value="salary">Salary</option>
+                  <option value="freelance">Freelance</option>
+                  <option value="other">Other</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-field">
+              <label for="date">Date</label>
+              <input id="date" name="date" type="date" required>
+            </div>
+
+            <div class="form-actions">
+              <button class="submit-button" id="submit-button" type="submit">
+                <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <path d="M12 5v14M5 12h14" />
+                </svg>
+                <span>Add transaction</span>
+              </button>
+              <button class="text-button" id="cancel-edit" type="button" hidden>Cancel edit</button>
+            </div>
+            <p class="form-feedback" id="form-feedback" role="status" aria-live="polite"></p>
+          </form>
+        </section>
+      </div>
+      <p class="storage-note" id="storage-note" role="status" aria-live="polite"></p>
+    </main>
+
+    <dialog class="confirm-dialog" id="delete-dialog" aria-labelledby="delete-title" aria-describedby="delete-description">
+      <form method="dialog">
+        <div class="dialog-icon" aria-hidden="true">−</div>
+        <h2 id="delete-title">Remove this entry?</h2>
+        <p id="delete-description">This transaction will be permanently removed from your history.</p>
+        <div class="dialog-actions">
+          <button class="text-button" value="cancel">Keep transaction</button>
+          <button class="delete-confirm-button" id="confirm-delete" value="confirm">Delete transaction</button>
+        </div>
+      </form>
+    </dialog>
+  </body>
+</html>
